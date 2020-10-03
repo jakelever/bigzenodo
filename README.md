@@ -1,10 +1,10 @@
 # BigZenodo
 
-This is a command-line tool for making large uploads to Zenodo. It requires a Zenodo API access token and uses the Restful API.
+This is a command-line tool for making large uploads to [Zenodo](https://zenodo.org/). It requires a [Zenodo API access token](https://zenodo.org/account/settings/applications/) and uses the [Restful API](https://developers.zenodo.org/).
 
 ## Installation
 
-This tool can be installed using PyPi, which will also install the dependencies of requests and markdown2.
+This tool can be installed using PyPi, which will also install the dependencies of [requests](https://pypi.org/project/requests/) and [markdown2](https://pypi.org/project/markdown2/).
 
 ```
 pip install bigzenodo
@@ -45,5 +45,5 @@ The tool takes in a JSON file with the fields below. *existing_zenodo_id* is opt
 }
 ```
 
-The description_file should be a file that contains text to be shown on the Zenodo page. If it is a Markdown file (and the filename ends with '.md'), it will rendered appropriately.
+The description_file should be a file that contains text to be shown on the Zenodo page. If it is a Markdown file (and the filename ends with '.md'), it will be rendered appropriately.
 
