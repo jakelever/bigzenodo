@@ -44,7 +44,9 @@ The tool takes in a JSON file with the fields below. *existing_zenodo_id* is opt
   "existing_zenodo_id": "1156241"
 }
 
+```
+
 The description_file should be a file that contains text to be shown on the Zenodo page. If it is a Markdown file (and the filename ends with '.md'), it will rendered appropriately.
 
-```
+
 
