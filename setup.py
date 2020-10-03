@@ -9,7 +9,7 @@ import sys
 if sys.version_info[0] < 3:
 	raise Exception("Requires Python 3")
 
-VERSION='0.1.0'
+VERSION='0.1.1'
 
 here = path.abspath(path.dirname(__file__))
 
