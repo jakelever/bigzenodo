@@ -1,5 +1,14 @@
 # BigZenodo
 
+<p>
+<a href="https://pypi.python.org/pypi/bigzenodo">
+   <img src="https://img.shields.io/pypi/v/bigzenodo.svg" />
+</a>
+<a href="https://opensource.org/licenses/MIT">
+   <img src="https://img.shields.io/badge/License-MIT-blue.svg" />
+</a>
+</p>
+
 This is a command-line tool for making large uploads to [Zenodo](https://zenodo.org/). It requires a [Zenodo API access token](https://zenodo.org/account/settings/applications/) and uses the [Restful API](https://developers.zenodo.org/).
 
 ## Installation
