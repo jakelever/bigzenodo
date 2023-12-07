@@ -16,19 +16,29 @@ def upload(file_list,title,author,author_affiliation,description_file,zenodo_acc
 	headers = {"Content-Type": "application/json"}
 
 	if existing_zenodo_id:
-		print("Creating new version of Zenodo submission %d" % existing_zenodo_id)
+		print("Getting main ID for existing Zenodo submissions %d" % existing_zenodo_id)
 
 		r = requests.get(ZENODO_URL + '/api/records/%d' % existing_zenodo_id, json={}, headers=headers)
 		assert r.status_code == 200, f'Unable to find existing Zenodo record to update ({existing_zenodo_id=} {r.status_code=})'
 
 		# Update with the latest ID
 		existing_zenodo_id = r.json()['id']
+		print(r.json())
+		print(r.json().keys())
+		
+		print("Discarding any previous version of Zenodo submission %d" % existing_zenodo_id)
+		r = requests.post(ZENODO_URL + '/api/deposit/depositions/%d/actions/discard' % existing_zenodo_id,
+							params={'access_token': zenodo_access_token}, json={},
+							headers=headers)
+							
+		print(f"{r.status_code=}")
 
+		print("Create new version of Zenodo submission %d" % existing_zenodo_id)
 		r = requests.post(ZENODO_URL + '/api/deposit/depositions/%d/actions/newversion' % existing_zenodo_id,
 							params={'access_token': zenodo_access_token}, json={},
 							headers=headers)
 
-		assert r.status_code == 201, f'Unable to create new version of Zenodo record ({existing_zenodo_id=} {r.status_code=})'
+		assert r.status_code == 201, f'Unable to create new version of Zenodo record ({existing_zenodo_id=} {r.status_code=} {r.json()=})'
 
 		jsonResponse = r.json()
 		newversion_draft_url = r.json()['links']['latest_draft']
