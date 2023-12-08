@@ -16,7 +16,10 @@ def main():
 	parser.add_argument('--publish',action='store_true',help='Whether to actually complete the publication of the data to Zenodo. Irreversible!')
 	args = parser.parse_args()
 
-	checkFilePermissions(args.accessTokenFile)
+	if os.name == 'nt':
+		print("Not checking file permissions of Zenodo API access token as on Windows")
+	else:
+		checkFilePermissions(args.accessTokenFile)
 
 	with open(args.accessTokenFile) as f:
 		zenodo_access_token = f.read().strip()
