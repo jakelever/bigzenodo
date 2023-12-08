@@ -44,7 +44,7 @@ The tool takes in a JSON file with the fields below. *existing_zenodo_id* is opt
 {
   "file_list": [
     "colour_of_magic.tsv",
-    "light_fantastic.tsv",
+    "light_fantastic.tsv"
   ],
   "title": "The Troubles of Luggage",
   "author": "Rincewind",
