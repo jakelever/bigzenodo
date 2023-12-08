@@ -23,22 +23,13 @@ def upload(file_list,title,author,author_affiliation,description_file,zenodo_acc
 
 		# Update with the latest ID
 		existing_zenodo_id = r.json()['id']
-		print(r.json())
-		print(r.json().keys())
-		
-		print("Discarding any previous version of Zenodo submission %d" % existing_zenodo_id)
-		r = requests.post(ZENODO_URL + '/api/deposit/depositions/%d/actions/discard' % existing_zenodo_id,
-							params={'access_token': zenodo_access_token}, json={},
-							headers=headers)
-							
-		print(f"{r.status_code=}")
 
 		print("Create new version of Zenodo submission %d" % existing_zenodo_id)
 		r = requests.post(ZENODO_URL + '/api/deposit/depositions/%d/actions/newversion' % existing_zenodo_id,
 							params={'access_token': zenodo_access_token}, json={},
 							headers=headers)
 
-		assert r.status_code == 201, f'Unable to create new version of Zenodo record ({existing_zenodo_id=} {r.status_code=} {r.json()=})'
+		assert r.status_code == 201, f'Unable to create new version of Zenodo record. You may need to manually delete any current draft deposits through the web interface. ({existing_zenodo_id=} {r.status_code=} {r.json()=})'
 
 		jsonResponse = r.json()
 		newversion_draft_url = r.json()['links']['latest_draft']
@@ -52,12 +43,12 @@ def upload(file_list,title,author,author_affiliation,description_file,zenodo_acc
 		doi = r.json()["metadata"]["prereserve_doi"]["doi"]
 		doi_url = "https://doi.org/" + doi
 	
-		print("Clearing old files from new version of %d" % existing_zenodo_id)
+		print("Clearing old files from new version of %s" % deposition_id)
 		for f in r.json()['files']:
 			file_id = f['id']
 			r = requests.delete(ZENODO_URL + '/api/deposit/depositions/%s/files/%s' % (deposition_id,file_id), params={'access_token': zenodo_access_token})
 
-			assert r.status_code == 204, f'Unable to clear old files in Zenodo record ({deposition_id=} {r.status_code=})'
+			assert r.status_code == 204, f'Unable to clear old files in Zenodo record ({f=} {deposition_id=} {r.status_code=} {r.json()=})'
 
 		print("Got provisional DOI: %s" % doi_url)
 	else:
